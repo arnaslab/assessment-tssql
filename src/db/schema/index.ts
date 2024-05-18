@@ -94,18 +94,39 @@ export const teamsRelations = relations(teams, ({ one }) => ({
   }),
 }));
 
-// export const plans = sqliteTable("plans", {
-// todo: add plans table schema
-// });
+export const plans = sqliteTable("plans", {
+  id: integer("id").primaryKey().notNull(),
+  name: text("name").notNull(),
+  monthlyPrice: integer("monthlyPrice").notNull(),
+  yearlyPrice: integer("price").notNull(),
+  createdAt: timestamp("createdAt").notNull(),
+  updatedAt: timestamp("updatedAt"),
+});
 
-// export const subscriptions = sqliteTable("subscriptions", {
-//   // todo: add subscriptions table schema
-// });
+export const subscriptions = sqliteTable("subscriptions", {
+  id: integer("id").primaryKey().notNull(),
+  teamId: integer("teamId").notNull(),
+  planId: integer("planId").notNull(),
+  subscriptionType: text("subscriptionType", {
+    enum: ["monthly", "yearly"],
+  }).notNull(),
+  createdAt: timestamp("createdAt").notNull(),
+  updatedAt: timestamp("updatedAt"),
+});
 
-// export const orders = sqliteTable("orders", {
-//   // todo: add orders table schema
-// });
+export const orders = sqliteTable("orders", {
+  id: integer("id").primaryKey().notNull(),
+  subscriptionId: integer("subscriptionId").notNull(),
+  billAmount: integer("billAmount").notNull(),
+  isPaid: boolean("isPaid").notNull(),
+  orderDate: timestamp("orderDate").notNull(),
+  lastPaymentDate: timestamp("lastPaymentDate").notNull(),
+  paymentDate: timestamp("paymentDate"),
+});
 
-// export const subscriptionActivations = sqliteTable("subscriptionActivations", {
-//   // todo: add subscriptionActivations table schema
-// });
+export const subscriptionActivations = sqliteTable("subscriptionActivations", {
+  id: integer("id").primaryKey().notNull(),
+  subscriptionId: integer("subscriptionId").notNull(),
+  activationDate: timestamp("activationDate").notNull(),
+  lastActiveDate: timestamp("lastActiveDate").notNull(),
+});
